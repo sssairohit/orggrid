@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OrgGrid - Private Capital Intelligence Platform</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Load Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
+        /* Base styles for all elements */
         * {
             color: #000;
             font-feature-settings: 'cv01' on, 'cv02' on, 'cv06' on, 'cv08' on, 'cv09' on, 'cv10' on, 'cv11' on;
@@ -19,34 +23,60 @@
             letter-spacing: -0.28px;
         }
         
+        /* Custom font sizes and weights for specific elements */
         .hero-title {
-            font-size: 48px;
+            font-size: 36px; /* Default for mobile */
             font-weight: 700;
             line-height: 120%;
             letter-spacing: -1.44px;
         }
-        
+        @media (min-width: 640px) { /* Small screens (sm) */
+            .hero-title {
+                font-size: 48px;
+            }
+        }
+        @media (min-width: 1024px) { /* Large screens (lg) */
+            .hero-title {
+                font-size: 56px; /* Adjusted for larger screens */
+            }
+        }
+
         .section-title {
-            font-size: 32px;
+            font-size: 28px; /* Default for mobile */
             font-weight: 600;
             line-height: 125%;
             letter-spacing: -0.96px;
         }
-        
+        @media (min-width: 640px) { /* Small screens (sm) */
+            .section-title {
+                font-size: 32px;
+            }
+        }
+
         .subsection-title {
-            font-size: 24px;
+            font-size: 20px; /* Default for mobile */
             font-weight: 600;
             line-height: 130%;
             letter-spacing: -0.72px;
         }
+        @media (min-width: 640px) { /* Small screens (sm) */
+            .subsection-title {
+                font-size: 24px;
+            }
+        }
         
         .feature-title {
-            font-size: 18px;
+            font-size: 16px; /* Default for mobile */
             font-weight: 600;
             line-height: 140%;
             letter-spacing: -0.54px;
         }
-        
+        @media (min-width: 640px) { /* Small screens (sm) */
+            .feature-title {
+                font-size: 18px;
+            }
+        }
+
         .small-text {
             font-size: 12px;
             font-weight: 400;
@@ -54,17 +84,20 @@
             letter-spacing: -0.24px;
         }
         
+        /* Button styles */
         .btn-primary {
             background: #2563eb;
             color: white;
             font-weight: 500;
             letter-spacing: -0.28px;
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
         }
         
         .btn-primary:hover {
             background: #1d4ed8;
         }
         
+        /* Accent colors and backgrounds */
         .accent-blue {
             color: #2563eb;
         }
@@ -77,11 +110,25 @@
             border-color: #e2e8f0;
         }
         
+        /* Metric number styling */
         .metric-number {
-            font-size: 36px;
+            font-size: 30px; /* Default for mobile */
             font-weight: 700;
             line-height: 110%;
             letter-spacing: -1.08px;
+        }
+        @media (min-width: 640px) { /* Small screens (sm) */
+            .metric-number {
+                font-size: 36px;
+            }
+        }
+
+        /* Mobile menu specific styles */
+        .mobile-menu-open {
+            display: block;
+        }
+        .mobile-menu-closed {
+            display: none;
         }
     </style>
 </head>
@@ -90,96 +137,128 @@
     <nav class="bg-white border-b border-light py-4 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
+                <!-- Logo -->
                 <div class="flex items-center">
                     <div class="font-bold text-xl">OrgGrid</div>
                 </div>
+                
+                <!-- Desktop Navigation Links -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="#platform" class="hover:text-blue-600">Platform</a>
-                    <a href="#products" class="hover:text-blue-600">Products</a>
-                    <a href="#customers" class="hover:text-blue-600">Customers</a>
-                    <a href="#integrations" class="hover:text-blue-600">Integrations</a>
+                    <a href="#platform" class="hover:text-blue-600 transition duration-300 ease-in-out">Platform</a>
+                    <a href="#products" class="hover:text-blue-600 transition duration-300 ease-in-out">Products</a>
+                    <a href="#customers" class="hover:text-blue-600 transition duration-300 ease-in-out">Customers</a>
+                    <a href="#integrations" class="hover:text-blue-600 transition duration-300 ease-in-out">Integrations</a>
                 </div>
-                <button class="btn-primary px-6 py-2 rounded-md">Get Started</button>
+                
+                <!-- Get Started Button (Desktop) -->
+                <button class="btn-primary px-6 py-2 rounded-md hidden md:block">Get Started</button>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu-closed md:hidden bg-white border-t border-light py-2">
+            <div class="px-4 pt-2 pb-3 space-y-1 sm:px-6">
+                <a href="#platform" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600">Platform</a>
+                <a href="#products" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600">Products</a>
+                <a href="#customers" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600">Customers</a>
+                <a href="#integrations" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600">Integrations</a>
+                <button class="btn-primary w-full px-3 py-2 rounded-md mt-2">Get Started</button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="py-20 bg-white">
+    <section class="py-16 sm:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="hero-title mb-6">The world's leading private capital investors use OrgGrid</h1>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">Purpose-built private capital platform that enables firms to get into the right deals and make better decisions across the firm with data and AI</p>
-            <button class="btn-primary px-8 py-3 rounded-md mr-4">Learn More</button>
-            <button class="border border-gray-300 px-8 py-3 rounded-md hover:bg-gray-50">Request Demo</button>
+            <h1 class="hero-title mb-4 sm:mb-6">The world's leading private capital investors use OrgGrid</h1>
+            <p class="text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto">Purpose-built private capital platform that enables firms to get into the right deals and make better decisions across the firm with data and AI</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button class="btn-primary px-8 py-3 rounded-md">Learn More</button>
+                <button class="border border-gray-300 px-8 py-3 rounded-md hover:bg-gray-50 transition duration-300 ease-in-out">Request Demo</button>
+            </div>
         </div>
     </section>
 
     <!-- Platform Overview -->
-    <section id="platform" class="py-16 bg-light-gray">
+    <section id="platform" class="py-12 sm:py-16 bg-light-gray">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="section-title mb-4">Drive better investment decisions</h2>
-                <p class="text-lg max-w-2xl mx-auto">Focus on finding, getting into, and winning quality deals with our comprehensive platform</p>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="section-title mb-3 sm:mb-4">Drive better investment decisions</h2>
+                <p class="text-base sm:text-lg max-w-2xl mx-auto">Focus on finding, getting into, and winning quality deals with our comprehensive platform</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-search accent-blue text-xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature Card 1 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                        <i class="fas fa-search accent-blue text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="feature-title mb-4">Identify and get into the right deals</h3>
-                    <p>Focus on finding, getting into, and winning quality deals that otherwise you may have missed</p>
+                    <h3 class="feature-title mb-3 sm:mb-4">Identify and get into the right deals</h3>
+                    <p class="text-sm sm:text-base">Focus on finding, getting into, and winning quality deals that otherwise you may have missed</p>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-bolt accent-blue text-xl"></i>
+                <!-- Feature Card 2 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                        <i class="fas fa-bolt accent-blue text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="feature-title mb-4">Drive fast, confident investment decisions</h3>
-                    <p>Make decisions faster and drive deals to close with comprehensive data insights</p>
+                    <h3 class="feature-title mb-3 sm:mb-4">Drive fast, confident investment decisions</h3>
+                    <p class="text-sm sm:text-base">Make decisions faster and drive deals to close with comprehensive data insights</p>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-network-wired accent-blue text-xl"></i>
+                <!-- Feature Card 3 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                        <i class="fas fa-network-wired accent-blue text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="feature-title mb-4">Use deal data to drive workflows across the firm</h3>
-                    <p>Integrate your firm's network and deal data across the entire tech stack</p>
+                    <h3 class="feature-title mb-3 sm:mb-4">Use deal data to drive workflows across the firm</h3>
+                    <p class="text-sm sm:text-base">Integrate your firm's network and deal data across the entire tech stack</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="py-16 bg-white">
+    <section id="products" class="py-12 sm:py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="section-title mb-4">Drive better dealmaking across your team with OrgGrid</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="section-title mb-3 sm:mb-4">Drive better dealmaking across your team with OrgGrid</h2>
             </div>
             
-            <div class="space-y-16">
-                <div class="flex flex-col lg:flex-row items-center gap-12">
-                    <div class="lg:w-1/2">
-                        <h3 class="subsection-title mb-4">OrgGrid CRM</h3>
-                        <p class="text-lg mb-6">The relationship intelligence CRM for dealmakers. Brings together relationship intelligence, deal sourcing, deal flow management, portfolio support, fundraising, and analytics that integrate directly with how you work.</p>
+            <div class="space-y-12 sm:space-y-16">
+                <!-- Product 1: OrgGrid CRM -->
+                <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                    <div class="lg:w-1/2 text-center lg:text-left">
+                        <h3 class="subsection-title mb-3 sm:mb-4">OrgGrid CRM</h3>
+                        <p class="text-base sm:text-lg mb-4 sm:mb-6">The relationship intelligence CRM for dealmakers. Brings together relationship intelligence, deal sourcing, deal flow management, portfolio support, fundraising, and analytics that integrate directly with how you work.</p>
                         <button class="btn-primary px-6 py-2 rounded-md">Learn More</button>
                     </div>
-                    <div class="lg:w-1/2">
-                        <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
-                            <span class="text-gray-500">CRM Dashboard Preview</span>
+                    <div class="lg:w-1/2 w-full">
+                        <div class="bg-gray-100 rounded-lg h-48 sm:h-64 flex items-center justify-center shadow-md">
+                            <span class="text-gray-500 text-sm sm:text-base">CRM Dashboard Preview</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="flex flex-col lg:flex-row-reverse items-center gap-12">
-                    <div class="lg:w-1/2">
-                        <h3 class="subsection-title mb-4">OrgGrid for Salesforce</h3>
-                        <p class="text-lg mb-6">Relationship insights driving deals in Salesforce. Provides deal teams with reliable and regularly updated insights about their organization's network of people and companies through Salesforce.</p>
+                <!-- Product 2: OrgGrid for Salesforce -->
+                <div class="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-12">
+                    <div class="lg:w-1/2 text-center lg:text-left">
+                        <h3 class="subsection-title mb-3 sm:mb-4">OrgGrid for Salesforce</h3>
+                        <p class="text-base sm:text-lg mb-4 sm:mb-6">Relationship insights driving deals in Salesforce. Provides deal teams with reliable and regularly updated insights about their organization's network of people and companies through Salesforce.</p>
                         <button class="btn-primary px-6 py-2 rounded-md">Learn More</button>
                     </div>
-                    <div class="lg:w-1/2">
-                        <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
-                            <span class="text-gray-500">Salesforce Integration Preview</span>
+                    <div class="lg:w-1/2 w-full">
+                        <div class="bg-gray-100 rounded-lg h-48 sm:h-64 flex items-center justify-center shadow-md">
+                            <span class="text-gray-500 text-sm sm:text-base">Salesforce Integration Preview</span>
                         </div>
                     </div>
                 </div>
@@ -188,62 +267,70 @@
     </section>
 
     <!-- Key Features -->
-    <section class="py-16 bg-light-gray">
+    <section class="py-12 sm:py-16 bg-light-gray">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="section-title mb-4">Drive deals faster</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="section-title mb-3 sm:mb-4">Drive deals faster</h2>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <h3 class="subsection-title mb-4">Get into the right deals with the right introduction</h3>
-                    <p class="mb-6">Find deals with the most complete relationship intelligence data on your whole firm's network</p>
-                    <button class="text-blue-600 font-medium">Learn More →</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Feature 1 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <h3 class="subsection-title mb-3 sm:mb-4">Get into the right deals with the right introduction</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">Find deals with the most complete relationship intelligence data on your whole firm's network</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Learn More &rarr;</button>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <h3 class="subsection-title mb-4">Close deals faster</h3>
-                    <p class="mb-6">Be ready for your Monday morning meeting and move deals forward with faster decisions</p>
-                    <button class="text-blue-600 font-medium">Learn More →</button>
+                <!-- Feature 2 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <h3 class="subsection-title mb-3 sm:mb-4">Close deals faster</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">Be ready for your Monday morning meeting and move deals forward with faster decisions</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Learn More &rarr;</button>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <h3 class="subsection-title mb-4">Enriched data on every record</h3>
-                    <p class="mb-6">Automatically enrich CRM records with data from 40+ premium data sources to make faster, more informed investment decisions</p>
-                    <button class="text-blue-600 font-medium">Learn More →</button>
+                <!-- Feature 3 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <h3 class="subsection-title mb-3 sm:mb-4">Enriched data on every record</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">Automatically enrich CRM records with data from 40+ premium data sources to make faster, more informed investment decisions</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Learn More &rarr;</button>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <h3 class="subsection-title mb-4">Drive decisions across the firm</h3>
-                    <p class="mb-6">Integrate your deal and network data into your data infrastructure to use in any app, data science project, or analysis</p>
-                    <button class="text-blue-600 font-medium">Learn More →</button>
+                <!-- Feature 4 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <h3 class="subsection-title mb-3 sm:mb-4">Drive decisions across the firm</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">Integrate your deal and network data into your data infrastructure to use in any app, data science project, or analysis</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Learn More &rarr;</button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Metrics Section -->
-    <section class="py-16 bg-white">
+    <section class="py-12 sm:py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="section-title mb-4">Driving measurable results for private capital firms</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="section-title mb-3 sm:mb-4">Driving measurable results for private capital firms</h2>
             </div>
             
-            <div class="grid md:grid-cols-4 gap-8 text-center">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+                <!-- Metric 1 -->
                 <div>
-                    <div class="metric-number accent-blue mb-2">40%</div>
+                    <div class="metric-number accent-blue mb-1 sm:mb-2">40%</div>
                     <p class="small-text uppercase tracking-wide text-gray-600">Growth in qualified deal flow</p>
                 </div>
+                <!-- Metric 2 -->
                 <div>
-                    <div class="metric-number accent-blue mb-2">3x</div>
+                    <div class="metric-number accent-blue mb-1 sm:mb-2">3x</div>
                     <p class="small-text uppercase tracking-wide text-gray-600">Increase in trackable relationships</p>
                 </div>
+                <!-- Metric 3 -->
                 <div>
-                    <div class="metric-number accent-blue mb-2">50%</div>
+                    <div class="metric-number accent-blue mb-1 sm:mb-2">50%</div>
                     <p class="small-text uppercase tracking-wide text-gray-600">Reduction in deal processing time</p>
                 </div>
+                <!-- Metric 4 -->
                 <div>
-                    <div class="metric-number accent-blue mb-2">200</div>
+                    <div class="metric-number accent-blue mb-1 sm:mb-2">200</div>
                     <p class="small-text uppercase tracking-wide text-gray-600">Hours saved annually per user</p>
                 </div>
             </div>
@@ -251,123 +338,145 @@
     </section>
 
     <!-- Customer Stories -->
-    <section id="customers" class="py-16 bg-light-gray">
+    <section id="customers" class="py-12 sm:py-16 bg-light-gray">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="section-title mb-4">Trusted by leading investment firms</h2>
-                <p class="text-lg">Powering 50% of the top 300 venture firms globally, OrgGrid customers have tracked over 1 million deals and invested in over $1 trillion in assets through the platform</p>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="section-title mb-3 sm:mb-4">Trusted by leading investment firms</h2>
+                <p class="text-base sm:text-lg max-w-3xl mx-auto">Powering 50% of the top 300 venture firms globally, OrgGrid customers have tracked over 1 million deals and invested in over $1 trillion in assets through the platform</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="metric-number accent-blue mb-4">40%</div>
-                    <h3 class="feature-title mb-4">Increase in opportunity tracking coverage</h3>
-                    <p class="mb-6">How Invus Opportunities increased centralized opportunity tracking by 40% with OrgGrid</p>
-                    <button class="text-blue-600 font-medium">Read full case study →</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Case Study 1 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="metric-number accent-blue mb-3 sm:mb-4">40%</div>
+                    <h3 class="feature-title mb-3 sm:mb-4">Increase in opportunity tracking coverage</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">How Invus Opportunities increased centralized opportunity tracking by 40% with OrgGrid</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Read full case study &rarr;</button>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="metric-number accent-blue mb-4">5x</div>
-                    <h3 class="feature-title mb-4">Faster opportunity discovery and triage</h3>
-                    <p class="mb-6">How MassMutual Ventures uses OrgGrid to source better deals 5x faster</p>
-                    <button class="text-blue-600 font-medium">Read full case study →</button>
+                <!-- Case Study 2 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="metric-number accent-blue mb-3 sm:mb-4">5x</div>
+                    <h3 class="feature-title mb-3 sm:mb-4">Faster opportunity discovery and triage</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">How MassMutual Ventures uses OrgGrid to source better deals 5x faster</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Read full case study &rarr;</button>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="metric-number accent-blue mb-4">2.5</div>
-                    <h3 class="feature-title mb-4">Hours saved per person each week</h3>
-                    <p class="mb-6">How TELUS Global Ventures creates more efficient workflows with OrgGrid</p>
-                    <button class="text-blue-600 font-medium">Read full case study →</button>
+                <!-- Case Study 3 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="metric-number accent-blue mb-3 sm:mb-4">2.5</div>
+                    <h3 class="feature-title mb-3 sm:mb-4">Hours saved per person each week</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">How TELUS Global Ventures creates more efficient workflows with OrgGrid</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Read full case study &rarr;</button>
                 </div>
                 
-                <div class="bg-white p-8 rounded-lg border border-light">
-                    <div class="metric-number accent-blue mb-4">1,000</div>
-                    <h3 class="feature-title mb-4">Deals evaluated a year with a team of 3</h3>
-                    <p class="mb-6">How Roble Ventures built an operating system with flexibility, customization, and integration at its core</p>
-                    <button class="text-blue-600 font-medium">Read full case study →</button>
+                <!-- Case Study 4 -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg border border-light shadow-sm">
+                    <div class="metric-number accent-blue mb-3 sm:mb-4">1,000</div>
+                    <h3 class="feature-title mb-3 sm:mb-4">Deals evaluated a year with a team of 3</h3>
+                    <p class="text-sm sm:text-base mb-4 sm:mb-6">How Roble Ventures built an operating system with flexibility, customization, and integration at its core</p>
+                    <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Read full case study &rarr;</button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Integrations -->
-    <section id="integrations" class="py-16 bg-white">
+    <section id="integrations" class="py-12 sm:py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="section-title mb-4">Deal data where you work</h2>
-                <p class="text-lg mb-8">Access relationship and deal insights directly within your email and browser and connect your tech stack with enterprise-grade integrations</p>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="section-title mb-3 sm:mb-4">Deal data where you work</h2>
+                <p class="text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto">Access relationship and deal insights directly within your email and browser and connect your tech stack with enterprise-grade integrations</p>
                 <button class="btn-primary px-6 py-2 rounded-md">Browse Integrations</button>
             </div>
             
-            <div class="grid grid-cols-6 gap-8 items-center justify-center text-center">
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <i class="fab fa-salesforce text-2xl text-gray-600"></i>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 sm:gap-8 items-center justify-center text-center">
+                <!-- Integration Icons -->
+                <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-sm">
+                    <i class="fab fa-salesforce text-xl sm:text-2xl text-gray-600"></i>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <i class="fab fa-microsoft text-2xl text-gray-600"></i>
+                <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-sm">
+                    <i class="fab fa-microsoft text-xl sm:text-2xl text-gray-600"></i>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <i class="fab fa-google text-2xl text-gray-600"></i>
+                <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-sm">
+                    <i class="fab fa-google text-xl sm:text-2xl text-gray-600"></i>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <i class="fab fa-slack text-2xl text-gray-600"></i>
+                <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-sm">
+                    <i class="fab fa-slack text-xl sm:text-2xl text-gray-600"></i>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <i class="fas fa-envelope text-2xl text-gray-600"></i>
+                <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-sm">
+                    <i class="fas fa-envelope text-xl sm:text-2xl text-gray-600"></i>
                 </div>
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <i class="fas fa-database text-2xl text-gray-600"></i>
+                <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-sm">
+                    <i class="fas fa-database text-xl sm:text-2xl text-gray-600"></i>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Security Section -->
-    <section class="py-16 bg-light-gray">
+    <section class="py-12 sm:py-16 bg-light-gray">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="section-title mb-4">Enterprise-grade security you can trust</h2>
-            <p class="text-lg mb-8">Protecting your data with SOC2, ISO27001, and industry-leading security certifications.</p>
-            <button class="text-blue-600 font-medium">Learn More →</button>
+            <h2 class="section-title mb-3 sm:mb-4">Enterprise-grade security you can trust</h2>
+            <p class="text-base sm:text-lg mb-6 sm:mb-8">Protecting your data with SOC2, ISO27001, and industry-leading security certifications.</p>
+            <button class="text-blue-600 font-medium hover:underline transition duration-300 ease-in-out">Learn More &rarr;</button>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-light py-12">
+    <footer class="bg-white border-t border-light py-10 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center sm:text-left">
+                <!-- Footer Column 1: OrgGrid Info -->
                 <div>
-                    <h3 class="font-bold text-lg mb-4">OrgGrid</h3>
-                    <p class="mb-4">The future of private capital intelligence</p>
+                    <h3 class="font-bold text-lg mb-3 sm:mb-4">OrgGrid</h3>
+                    <p class="text-sm sm:text-base mb-3 sm:mb-4">The future of private capital intelligence</p>
                 </div>
+                <!-- Footer Column 2: Products -->
                 <div>
-                    <h4 class="font-semibold mb-4">Products</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-blue-600">OrgGrid CRM</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Salesforce Integration</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Data Analytics</a></li>
+                    <h4 class="font-semibold mb-3 sm:mb-4">Products</h4>
+                    <ul class="space-y-2 text-sm sm:text-base">
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">OrgGrid CRM</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Salesforce Integration</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Data Analytics</a></li>
                     </ul>
                 </div>
+                <!-- Footer Column 3: Resources -->
                 <div>
-                    <h4 class="font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-blue-600">Case Studies</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Documentation</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Security</a></li>
+                    <h4 class="font-semibold mb-3 sm:mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm sm:text-base">
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Case Studies</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Documentation</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Security</a></li>
                     </ul>
                 </div>
+                <!-- Footer Column 4: Company -->
                 <div>
-                    <h4 class="font-semibold mb-4">Company</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-blue-600">About</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Careers</a></li>
-                        <li><a href="#" class="hover:text-blue-600">Contact</a></li>
+                    <h4 class="font-semibold mb-3 sm:mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm sm:text-base">
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">About</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Careers</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition duration-300 ease-in-out">Contact</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-light mt-8 pt-8 text-center">
+            <div class="border-t border-light mt-8 pt-6 text-center">
                 <p class="small-text text-gray-600">© 2024 OrgGrid. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('mobile-menu-open');
+                mobileMenu.classList.toggle('mobile-menu-closed');
+            });
+        });
+    </script>
 </body>
 </html>
